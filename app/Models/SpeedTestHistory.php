@@ -34,6 +34,7 @@ class SpeedTestHistory extends Model
         'ping',
         'download_speed',
         'upload_speed',
+        'ip',
         'provider_id'
     ];
 

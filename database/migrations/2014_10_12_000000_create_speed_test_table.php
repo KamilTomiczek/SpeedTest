@@ -19,6 +19,7 @@ class CreateSpeedTestTable extends Migration
             $table->string('ping', 30);
             $table->string('download_speed', 30);
             $table->string('upload_speed', 30);
+            $table->string('ip', 30);
             $table->timestamps();
 
             $table->foreign('provider_id')->references('id')->on('speedtest_provider');

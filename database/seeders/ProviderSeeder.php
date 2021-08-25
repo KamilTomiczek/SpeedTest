@@ -15,11 +15,11 @@ class ProviderSeeder extends Seeder
     public function run()
     {
         SpeedtestProvider::firstOrCreate([
-            'name' => 'Speedtest.pl',
+            'name' => 'speedtest.pl',
         ]);
 
         SpeedtestProvider::firstOrCreate([
-            'name' => 'Speedtest.net',
+            'name' => 'speedtest.net',
         ]);
     }
 }

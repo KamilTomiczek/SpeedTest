@@ -34,7 +34,7 @@ class Speedtests extends BrowserStack
 
         $this->browse(function (Browser $browser) {
             $browser->visit(self::SPEEDTEST_PL_URL)
-                ->waitFor(self::SPEEDTEST_PL_START_SELECTOR)
+                ->waitFor(self::SPEEDTEST_PL_START_SELECTOR, 60)
                 ->click(self::SPEEDTEST_PL_START_SELECTOR)
                 ->waitFor(self::SPEEDTEST_PL_RESULT_SELECTOR, 120);
 
@@ -42,6 +42,7 @@ class Speedtests extends BrowserStack
                 $browser->text('#ping-result'),
                 $browser->text('#download-result'),
                 $browser->text('#upload-result'),
+                $browser->click(self::SPEEDTEST_PL_IP_RESULT)->text('.left h1 > span'),
                 1
             );
         });
@@ -52,7 +53,7 @@ class Speedtests extends BrowserStack
 
         $this->browse(function (Browser $browser) {
             $browser->visit(self::SPEEDTEST_NET_URL)
-                ->waitFor(self::SPEEDTEST_NET_ACCEPTBUTTON, 20)
+                ->waitFor(self::SPEEDTEST_NET_ACCEPTBUTTON, 60)
                 ->click(self::SPEEDTEST_NET_ACCEPTBUTTON)
                 ->waitFor(self::SPEEDTEST_NET_START_SELECTOR, 20)
                 ->click(self::SPEEDTEST_NET_START_SELECTOR)
@@ -62,17 +63,19 @@ class Speedtests extends BrowserStack
                 $browser->text('.ping-speed'),
                 $browser->text('.download-speed'),
                 $browser->text('.upload-speed'),
+                $browser->text('.result-data.js-data-ip'),
                 2
             );
         });
     }
 
-    public function insert(int $ping, float $download_speed, float $upload_speed, int $provider_id): void
+    public function insert(int $ping, float $download_speed, float $upload_speed, string $ip, int $provider_id): void
     {
         SpeedTestHistory::create([
             'ping' => $ping . ' ms',
             'download_speed' => MathHelpers::multiply($download_speed, 1000) . ' kb/s',
             'upload_speed' => MathHelpers::multiply($upload_speed, 1000) . ' kb/s',
+            'ip' => $ip,
             'provider_id' => $provider_id
         ]);
     }

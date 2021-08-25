@@ -30,6 +30,8 @@ abstract class BrowserStack
 
     const SPEEDTEST_PL_RESULT_SELECTOR = '.wynik-box';
     const SPEEDTEST_NET_RESULT_SELECTOR = '.result-label';
+
+    const SPEEDTEST_PL_IP_RESULT = 'a[href="https://www.speedtest.pl/co_to_jest_adres_ip"]';
     /**
      * @var null
      */

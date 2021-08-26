@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreUserRequest;
-use App\Http\Requests\StoreUserRrquest;
 use Illuminate\Http\Request;
 
 class SessionsController extends Controller

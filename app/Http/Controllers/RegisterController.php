@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Validator;
 
 class RegisterController extends Controller
 {
@@ -11,15 +12,18 @@ class RegisterController extends Controller
         return view('register.create');
     }
 
-    public function  store(){
-        $attributes = request()->validate([
+    public function  store(Request $request){
+        $attributes = Validator::make($request->all(), [
             'name' => 'required|max:255',
             'username' => 'required|max:255|min:3|unique:users,username',
             'email' => 'required|email|max:255|unique:users,email',
             'password' => 'required|max:255|min:8'
         ]);
 
-        $user = User::create($attributes);
+        $user = User::create(array_merge(
+            $attributes->validated(),
+            ['password' => bcrypt($request->password)]
+        ));
 
         auth()->login($user);
 

@@ -1,11 +1,7 @@
 <?php
 
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
-use App\Http\Controllers\SessionsController;
-use App\Http\Controllers\RegisterController;
-use Illuminate\Support\Facades\DB;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,33 +14,10 @@ use Illuminate\Support\Facades\DB;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
-Route::get('/', function () {
-
-    $history = DB::table('speedtest_provider')
-        -> join ('speedtest_history', 'provider_id', '=', 'speedtest_provider.id')
-        ->groupBy('speedtest_history.id')
-        -> get();
-
-    return view('welcome', ['history' => $history]);
-});
-
-Route::get('register', [RegisterController::class, 'create'])->middleware('guest');
-Route::post('register', [RegisterController::class, 'store'])->middleware('guest');
-
-Route::get('login', [SessionsController::class, 'create'])->middleware('guest');
-Route::post('login', [SessionsController::class, 'store'])->middleware('guest');
-
-Route::post('logout', [SessionsController::class, 'destroy'])->middleware('auth');
-
 Route::group([
-    'middleware' => 'api',
     'prefix' => 'auth'
 
-], function ($router) {
+], function () {
     Route::post('/login', [AuthController::class, 'login']);
     Route::post('/register', [AuthController::class, 'register']);
     Route::post('/logout', [AuthController::class, 'logout']);
